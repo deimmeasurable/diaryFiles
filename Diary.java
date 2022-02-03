@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Diary {
     private String ownerName;
-    private ArrayList<Entry> entries = new ArrayList<>();
+    private ArrayList<Entry> gist = new ArrayList<>();
     private String password;
 
     public Diary(String ownerName, String password) {
@@ -36,26 +36,26 @@ public class Diary {
         this.ownerName = ownerName;
     }
 
-    public List<Entry> getEntries() {
-        return entries;
+    public List<Entry> getGist() {
+        return gist;
     }
 
-    public void setEntries(List<Entry> entries) {
-        this.entries = (ArrayList<Entry>) entries;
+    public void setGist(List<Entry> gist) {
+        this.gist = (ArrayList<Entry>) gist;
     }
 
 
     public void canAddGist(String title, String story, String password) {
         if (password.equals(password)) {
             Entry myGist = new Entry(title, story);
-            entries.add(myGist);
+            gist.add(myGist);
         } else {
             throw new IllegalArgumentException("invalid password");
         }
     }
 
     public Entry findGistByTitle(String gistTitle) {
-            for (Entry gist : entries) {
+            for (Entry gist : gist) {
                 if (gist.getTitle().equalsIgnoreCase(gistTitle))
                     return gist;
             }
@@ -64,17 +64,25 @@ public class Diary {
             throw new IllegalArgumentException("Gist not found");
         }
 
-    public void canRemoveGist(String gistTitle, String story, String correctPassword) {
 
-        for(Entry removeGist : entries) {
-            if(removeGist.getTitle().equalsIgnoreCase(gistTitle) && correctPassword.equals(password)) ;{
-                entries.remove(removeGist);
-
+    public void canDeleteGist(String gistTitle, String password) {
+        if (this.password.equals(password)){
+            for(Entry entry: gist){
+                if (entry.getTitle().equalsIgnoreCase(gistTitle)){
+                    gist.remove(entry);
+                    break;
+                }
+                else {
+                    throw new IllegalArgumentException("Gist not found");
+                }
             }
-
-                throw new IllegalArgumentException("gist not on the list");
-            
+        }
+        else {
+            throw new IllegalArgumentException("Password Not Correct");
         }
     }
 }
+
+
+
 
